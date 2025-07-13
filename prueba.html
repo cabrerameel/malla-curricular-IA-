@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Prueba clic y estilos</title>
-  <style>
-    .curso {
-      padding: 20px;
-      margin: 10px;
-      border: 2px solid black;
-      cursor: pointer;
-      width: 200px;
-      user-select: none;
-    }
-    .curso.activo {
-      background-color: lightgreen;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>Prueba clic simple</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+  }
+  #boton {
+    width: 150px;
+    height: 50px;
+    background: cornflowerblue;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    margin: 50px auto;
+    border-radius: 8px;
+  }
+  #boton.activo {
+    background: seagreen;
+  }
+</style>
 </head>
 <body>
-
-  <div class="curso" id="curso1">Curso 1</div>
-  <div class="curso" id="curso2">Curso 2</div>
+  <div id="boton">Haz clic aquí</div>
 
   <script>
-    const cursos = document.querySelectorAll('.curso');
-    cursos.forEach(curso => {
-      curso.addEventListener('click', () => {
-        curso.classList.toggle('activo');
-        alert('Clic en ' + curso.id);
-      });
+    const boton = document.getElementById('boton');
+    boton.addEventListener('click', () => {
+      boton.classList.toggle('activo');
+      alert('Botón clickeado!');
     });
   </script>
-
 </body>
 </html>
