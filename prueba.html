@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<title>Malla Interactiva</title>
-<style>
-  .curso {
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid black;
-    cursor: pointer;
-  }
-  .curso.activo {
-    background-color: #a0e0a0;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <title>Prueba clic y estilos</title>
+  <style>
+    .curso {
+      padding: 20px;
+      margin: 10px;
+      border: 2px solid black;
+      cursor: pointer;
+      width: 200px;
+      user-select: none;
+    }
+    .curso.activo {
+      background-color: lightgreen;
+    }
+  </style>
 </head>
 <body>
-  <div id="quimGen1" class="curso">Química General 1</div>
-  <div id="quimGen2" class="curso">Química General 2</div>
+
+  <div class="curso" id="curso1">Curso 1</div>
+  <div class="curso" id="curso2">Curso 2</div>
 
   <script>
     const cursos = document.querySelectorAll('.curso');
     cursos.forEach(curso => {
       curso.addEventListener('click', () => {
         curso.classList.toggle('activo');
-        alert(curso.id + ' clickeado!');
+        alert('Clic en ' + curso.id);
       });
     });
   </script>
+
 </body>
 </html>
