@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Malla Interactiva</title>
+<style>
+  .curso {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+  .curso.activo {
+    background-color: #a0e0a0;
+  }
+</style>
+</head>
+<body>
+  <div id="quimGen1" class="curso">Química General 1</div>
+  <div id="quimGen2" class="curso">Química General 2</div>
+
+  <script>
+    const cursos = document.querySelectorAll('.curso');
+    cursos.forEach(curso => {
+      curso.addEventListener('click', () => {
+        curso.classList.toggle('activo');
+        alert(curso.id + ' clickeado!');
+      });
+    });
+  </script>
+</body>
+</html>
