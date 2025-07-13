@@ -33,7 +33,7 @@ h1 {
   border: 1px solid #ccc;
   background-color: #eee;
   color: #666;
-  cursor: not-allowed;
+  cursor: pointer;
   transition: 0.3s;
 }
 
