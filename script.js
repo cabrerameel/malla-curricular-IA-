@@ -1,227 +1,168 @@
-// Datos de la malla curricular
+// Definición de cursos y prerrequisitos (usamos id para referencia interna)
 const cursos = [
-  // Primer año
-  {
-    semestre: "Primer año - I Semestre",
-    cursos: [
-      { id: "quimGen1", nombre: "Química general 1", abre: ["quimGen2", "labQuimGen"] },
-      { id: "tecLabQuim", nombre: "Técnicas de laboratorio químico", abre: ["labQuimGen"] },
-      { id: "mecanica", nombre: "Mecánica", abre: ["electromagnetismo"] },
-      { id: "calcIntro", nombre: "Introducción al cálculo", abre: ["calcDifInt", "electromagnetismo"] },
-      { id: "ingles1", nombre: "Inglés 1", abre: ["ingles2"] },
-      { id: "iaIntro1", nombre: "Introducción a la IA", abre: ["iaIntro2"] },
-    ],
-  },
-  {
-    semestre: "Primer año - II Semestre",
-    cursos: [
-      { id: "quimGen2", nombre: "Química general 2", abre: ["quimOrg1", "quimAnal1", "labQuimOrg1"] },
-      { id: "electromagnetismo", nombre: "Electromagnetismo", abre: ["fisicoquimAlim"] },
-      { id: "calcDifInt", nombre: "Cálculo diferencial e integral", abre: ["calcAvanzMult", "estadistica"] },
-      { id: "ingles2", nombre: "Inglés 2", abre: ["ingles3"] },
-      { id: "iaIntro2", nombre: "Introducción a la IA 2", abre: ["comOralEscrita"] },
-      { id: "labQuimGen", nombre: "Laboratorio de química general", abre: ["labQuimOrg1", "quimAnal1"] },
-    ],
-  },
+  // Primer año - I Semestre
+  { id: "quimGen1", nombre: "Química general 1", prereqs: [], abre: ["quimGen2", "labQuimGen"] },
+  { id: "tecLabQuim", nombre: "Técnicas de laboratorio químico", prereqs: [], abre: ["labQuimGen"] },
+  { id: "mecanica", nombre: "Mecánica", prereqs: [], abre: ["electromagnetismo"] },
+  { id: "introCalculo", nombre: "Introducción al cálculo", prereqs: [], abre: ["calculoDifInt", "electromagnetismo"] },
+  { id: "ingles1", nombre: "Inglés 1", prereqs: [], abre: ["ingles2"] },
+  { id: "introIA1", nombre: "Introducción a la IA", prereqs: [], abre: ["introIA2"] },
 
-  // Segundo año
-  {
-    semestre: "Segundo año - III Semestre",
-    cursos: [
-      { id: "quimOrg1", nombre: "Química orgánica 1", abre: ["quimOrg2", "fisicoquim1"] },
-      { id: "labQuimOrg", nombre: "Laboratorio de química orgánica", abre: [] },
-      { id: "quimAnal1", nombre: "Química analítica", abre: ["quimAnal2", "labAnalQuim"] },
-      { id: "estadistica", nombre: "Estadística y análisis de datos", abre: ["labAnalQuim", "modGestion1", "computacion"] },
-      { id: "calcAvanzMult", nombre: "Cálculo avanzado multivariado", abre: ["algebraLineal", "analisisNumerico", "dibujoIngenieria"] },
-      { id: "ingles3", nombre: "Inglés 3", abre: ["ingles4"] },
-      { id: "comOralEscrita", nombre: "Comunicación oral y escrita para el ingeniero en alimentos", abre: ["computacion"] },
-    ],
-  },
-  {
-    semestre: "Segundo año - IV Semestre",
-    cursos: [
-      { id: "quimOrg2", nombre: "Química orgánica 2", abre: ["matPrimasVegetalesAnimales"] },
-      { id: "quimAnal2", nombre: "Química analítica 2", abre: ["labAnalInstrumental"] },
-      { id: "fisicoquim1", nombre: "Fisicoquímica 1", abre: ["fisicoquimAlim"] },
-      { id: "labAnalQuim", nombre: "Laboratorio de análisis químico", abre: ["labAnalInstrumental"] },
-      { id: "modGestion1", nombre: "Módulo de gestión 1", abre: ["modGestion2"] },
-      { id: "computacion", nombre: "Computación", abre: ["disenoExperimentos"] },
-      { id: "algebraLineal", nombre: "Álgebra lineal y análisis numérico", abre: ["ecuacionesDiferenciales"] },
-      { id: "ingles4", nombre: "Inglés 4", abre: ["comCienciaTecnAlim"] },
-    ],
-  },
+  // Primer año - II Semestre
+  { id: "quimGen2", nombre: "Química general 2", prereqs: ["quimGen1"], abre: ["quimOrg1", "quimAnalit1", "labQuimOrg1"] },
+  { id: "electromagnetismo", nombre: "Electromagnetismo", prereqs: ["mecanica", "introCalculo"], abre: ["fisicoquimAlimentos"] },
+  { id: "calculoDifInt", nombre: "Cálculo diferencial e integral", prereqs: ["introCalculo"], abre: ["calculoMultivar", "estadistica"] },
+  { id: "ingles2", nombre: "Inglés 2", prereqs: ["ingles1"], abre: ["ingles3"] },
+  { id: "introIA2", nombre: "Introducción a la IA 2", prereqs: ["introIA1"], abre: ["comOralEscrita"] },
+  { id: "labQuimGen", nombre: "Laboratorio de química general", prereqs: ["quimGen1", "tecLabQuim"], abre: ["labQuimOrg1", "quimAnalit1"] },
 
-  // Tercer año
-  {
-    semestre: "Tercer año - V Semestre",
-    cursos: [
-      { id: "matPrimasVegetalesAnimales", nombre: "Materias primas y vegetales", abre: ["bioquimGen"] },
-      { id: "labAnalInstrumental", nombre: "Laboratorio de análisis instrumental", abre: ["quimAnalAlim", "operUnitarias"] },
-      { id: "modGestion2", nombre: "Módulo de gestión 2", abre: ["gestionFinanciera"] },
-      { id: "fisicoquimAlim", nombre: "Fisicoquímica orientada en alimentos", abre: ["operUnitarias1", "envasesEmbalajes"] },
-      { id: "ecuacionesDiferenciales", nombre: "Ecuaciones diferenciales", abre: ["operUnitarias"] },
-      { id: "dibujoIngenieria", nombre: "Dibujo en ingeniería", abre: ["disenoPlantas"] },
-      { id: "comCienciaTecnAlim", nombre: "Comunicación en ciencia y tecnología de los alimentos", abre: ["practica1UnidadInv"] },
-    ],
-  },
-  {
-    semestre: "Tercer año - VI Semestre",
-    cursos: [
-      { id: "bioquimGen", nombre: "Bioquímica general", abre: ["bioquimAlim"] },
-      { id: "quimAnalAlim", nombre: "Química y análisis de los alimentos", abre: ["nutricion", "legislacionAlimentaria"] },
-      { id: "operUnitarias1", nombre: "Operaciones unitarias 1", abre: ["seguridadIndustrial", "operUnitarias2"] },
-      { id: "propFisAlim", nombre: "Propiedades físicas de los alimentos", abre: ["envasesEmbalajes"] },
-      { id: "practica1UnidadInv", nombre: "Práctica 1 unidad de investigación", abre: ["practica2"] },
-    ],
-  },
+  // Segundo año - III Semestre
+  { id: "quimOrg1", nombre: "Química orgánica 1", prereqs: ["quimGen2"], abre: ["quimOrg2", "fisicoquim1"] },
+  { id: "labQuimOrg", nombre: "Laboratorio de química orgánica", prereqs: [], abre: [] },
+  { id: "quimAnalit1", nombre: "Química analítica 1", prereqs: ["quimGen2"], abre: ["quimAnalit2", "labAnalitico"] },
+  { id: "estadistica", nombre: "Estadística y análisis de datos", prereqs: ["calculoDifInt"], abre: ["labAnalitico", "modGestion1", "computacion"] },
+  { id: "calculoMultivar", nombre: "Cálculo avanzado multivariado", prereqs: ["calculoDifInt"], abre: ["algebraLineal", "analisisNumerico", "dibujoIng"] },
+  { id: "ingles3", nombre: "Inglés 3", prereqs: ["ingles2"], abre: ["ingles4"] },
+  { id: "comOralEscrita", nombre: "Comunicación oral y escrita", prereqs: ["introIA2"], abre: ["computacion"] },
 
-  // Cuarto año
-  {
-    semestre: "Cuarto año - VII Semestre",
-    cursos: [
-      { id: "bioquimAlim", nombre: "Bioquímica de los alimentos", abre: ["microInocuidadAlim", "higieneSanidadInd"] },
-      { id: "legislacionAlimentaria", nombre: "Legislación alimentaria", abre: ["practicaProfesional"] },
-      { id: "nutricion", nombre: "Nutrición", abre: [] },
-      { id: "operUnitarias2", nombre: "Operaciones unitarias 2", abre: ["disenoExperimentos", "procConservBajasTemp", "procConservAltasTemp", "disenoPlantas"] },
-      { id: "seguridadIndustrial", nombre: "Seguridad industrial", abre: ["practica2"] },
-      { id: "envasesEmbalajes", nombre: "Envases y embalajes", abre: [] },
-    ],
-  },
-  {
-    semestre: "Cuarto año - VIII Semestre",
-    cursos: [
-      { id: "higieneSanidadInd", nombre: "Higiene y sanidad industrial", abre: ["ingProcesFermentaciones"] },
-      { id: "microInocuidadAlim", nombre: "Microbiología e inocuidad de los alimentos", abre: ["ingProcesFermentaciones", "ingProcesConservAlim"] },
-      { id: "disenoExperimentos", nombre: "Diseño de experimentos", abre: [] },
-      { id: "procConservBajasTemp", nombre: "Procesos de conservación por bajas temperaturas", abre: ["ingProcesLacteos", "ingProcesProdMar", "ingProcesCereales", "ingProcesProdCarnicos", "ingProcesConservAlim", "ingProcesGrasasAceites", "evaluacionSensorial"] },
-      { id: "procConservAltasTemp", nombre: "Procesos de conservación a altas temperaturas", abre: ["ingProcesConservAlim", "ingProcesCarnicos", "ingProcesProdMar", "ingProcesLacteos", "ingProcesCereales", "ingProcesGrasasAceites", "evaluacionSensorial"] },
-      { id: "disenoPlantas", nombre: "Diseño de plantas", abre: ["evaluacionProyectos"] },
-      { id: "practica2", nombre: "Práctica 2", abre: [] },
-    ],
-  },
+  // Segundo año - IV Semestre
+  { id: "quimOrg2", nombre: "Química orgánica 2", prereqs: ["quimOrg1"], abre: ["matPrimVeg", "matPrimAnim"] },
+  { id: "quimAnalit2", nombre: "Química analítica 2", prereqs: ["quimAnalit1"], abre: ["labAnalitInstrumental"] },
+  { id: "fisicoquim1", nombre: "Fisicoquímica 1", prereqs: ["quimOrg1"], abre: ["fisicoquimAlimentos"] },
+  { id: "labAnalitico", nombre: "Laboratorio de análisis químico", prereqs: ["quimAnalit1", "estadistica"], abre: ["labAnalitInstrumental"] },
+  { id: "modGestion1", nombre: "Módulo de gestión 1", prereqs: ["estadistica"], abre: ["modGestion2"] },
+  { id: "computacion", nombre: "Computación", prereqs: ["estadistica", "comOralEscrita"], abre: ["disenoExperimentos"] },
+  { id: "algebraLineal", nombre: "Álgebra lineal y análisis numérico", prereqs: ["calculoMultivar"], abre: ["ecuacionesDiferenciales"] },
+  { id: "ingles4", nombre: "Inglés 4", prereqs: ["ingles3"], abre: ["comCienciaAlimentos"] },
 
-  // Quinto año
-  {
-    semestre: "Quinto año - IX Semestre",
-    cursos: [
-      { id: "ingProcesConservAlim", nombre: "Ingeniería de procesos de conservación de alimentos", abre: [] },
-      { id: "ingProcesProdCarnicos", nombre: "Ingeniería de procesos en productos cárnicos", abre: [] },
-      { id: "evaluacionSensorial", nombre: "Evaluación sensorial", abre: ["gestionCalidad"] },
-      { id: "evaluacionProyectos", nombre: "Evaluación de proyectos", abre: [] },
-      { id: "ingProcesGrasasAceites", nombre: "Ingeniería de procesos en grasas y aceites", abre: [] },
-      { id: "ingProcesCereales", nombre: "Ingeniería de procesos en cereales", abre: [] },
-    ],
-  },
-  {
-    semestre: "Quinto año - X Semestre",
-    cursos: [
-      { id: "ingProcesLacteos", nombre: "Ingeniería de procesos en lácteos", abre: ["practicaProfIA", "actividadFinalTit"] },
-      { id: "ingProcesProdMar", nombre: "Ingeniería de procesos en productos del mar", abre: ["practicaProfIA", "actividadFinalTit"] },
-      { id: "ingProcesFermentaciones", nombre: "Ingeniería de procesos en fermentaciones", abre: ["gestionCalidad", "practicaProfIA"] },
-      { id: "gestionCalidad", nombre: "Gestión de calidad", abre: ["practicaProfIA", "actividadFinalTit"] },
-    ],
-  },
+  // Tercer año - V Semestre
+  { id: "matPrimVeg", nombre: "Materias primas y vegetales", prereqs: ["quimOrg2"], abre: ["bioquimGen"] },
+  { id: "labAnalitInstrumental", nombre: "Laboratorio de análisis instrumental", prereqs: ["quimAnalit2", "labAnalitico"], abre: ["quimAlim", "operUnitarias"] },
+  { id: "modGestion2", nombre: "Módulo de gestión 2", prereqs: ["modGestion1"], abre: ["gestionFinanciera"] },
+  { id: "fisicoquimAlimentos", nombre: "Fisicoquímica orientada en alimentos", prereqs: ["fisicoquim1", "electromagnetismo"], abre: ["operUnit1", "envasesEmbalajes"] },
+  { id: "ecuacionesDiferenciales", nombre: "Ecuaciones diferenciales", prereqs: ["algebraLineal"], abre: ["operUnitarias"] },
+  { id: "dibujoIng", nombre: "Dibujo en ingeniería", prereqs: ["calculoMultivar"], abre: ["disenoPlantas"] },
+  { id: "comCienciaAlimentos", nombre: "Comunicación en ciencia y tecnología de los alimentos", prereqs: ["ingles4"], abre: ["practica1"] },
 
-  // Sexto año
-  {
-    semestre: "Sexto año - XI Semestre",
-    cursos: [
-      { id: "practicaProfesional", nombre: "Práctica profesional", abre: [] },
-      { id: "actividadFinalTit", nombre: "Actividad final de titulación", abre: [] },
-    ],
-  },
+  // Tercer año - VI Semestre
+  { id: "bioquimGen", nombre: "Bioquímica general", prereqs: ["matPrimVeg"], abre: ["bioquimAlim"] },
+  { id: "quimAlim", nombre: "Química y análisis de los alimentos", prereqs: ["labAnalitInstrumental"], abre: ["nutricion", "legislacionAlimentaria"] },
+  { id: "operUnit1", nombre: "Operaciones unitarias 1", prereqs: ["fisicoquimAlimentos"], abre: ["seguridadInd", "operUnit2"] },
+  { id: "propFisAlim", nombre: "Propiedades físicas de los alimentos", prereqs: [], abre: ["envasesEmbalajes"] },
+  { id: "practica1", nombre: "Práctica 1 unidad de investigación", prereqs: ["comCienciaAlimentos"], abre: ["practica2"] },
+
+  // Cuarto año - VII Semestre
+  { id: "bioquimAlim", nombre: "Bioquímica de los alimentos", prereqs: ["bioquimGen"], abre: ["microbiologia", "higieneSanidad"] },
+  { id: "legislacionAlimentaria", nombre: "Legislación alimentaria", prereqs: ["quimAlim"], abre: ["practicaProf"] },
+  { id: "nutricion", nombre: "Nutrición", prereqs: ["quimAlim"], abre: [] },
+  { id: "operUnit2", nombre: "Operaciones unitarias 2", prereqs: ["operUnit1"], abre: ["disenoExperimentos", "procConservBajasTemp", "procConservAltasTemp", "disenoPlantas"] },
+  { id: "seguridadInd", nombre: "Seguridad industrial", prereqs: ["operUnit1"], abre: ["practica2"] },
+  { id: "envasesEmbalajes", nombre: "Envases y embalajes", prereqs: ["fisicoquimAlimentos", "propFisAlim"], abre: [] },
+
+  // Cuarto año - VIII Semestre
+  { id: "higieneSanidad", nombre: "Higiene y sanidad industrial", prereqs: ["bioquimAlim"], abre: ["ingenieriaFermentaciones"] },
+  { id: "microbiologia", nombre: "Microbiología e inocuidad de los alimentos", prereqs: ["bioquimAlim"], abre: ["ingenieriaFermentaciones", "ingenieriaConservacion"] },
+  { id: "disenoExperimentos", nombre: "Diseño de experimentos", prereqs: ["computacion", "operUnit2"], abre: [] },
+  { id: "procConservBajasTemp", nombre: "Procesos de conservación por bajas temperaturas", prereqs: ["operUnit2"], abre: ["ingenieriaLacteos", "ingenieriaProdMar", "ingenieriaCereales", "ingenieriaProdCarnicos", "ingenieriaConservacion", "ingenieriaGrasasAceites", "evaluacionSensorial"] },
+  { id: "procConservAltasTemp", nombre: "Procesos de conservación a altas temperaturas", prereqs: ["operUnit2"], abre: ["ingenieriaConservacion", "ingenieriaProdCarnicos", "ingenieriaProdMar", "ingenieriaLacteos", "ingenieriaCereales", "ingenieriaGrasasAceites", "evaluacionSensorial"] },
+  { id: "disenoPlantas", nombre: "Diseño de plantas", prereqs: ["dibujoIng", "operUnit2"], abre: ["evaluacionProyectos"] },
+  { id: "practica2", nombre: "Práctica 2", prereqs: ["practica1", "seguridadInd"], abre: [] },
+
+  // Quinto año - VIIII Semestre
+  { id: "ingenieriaConservacion", nombre: "Ingeniería de procesos de conservación de alimentos", prereqs: ["procConservBajasTemp", "procConservAltasTemp"], abre: [] },
+  { id: "ingenieriaProdCarnicos", nombre: "Ingeniería de procesos en productos cárnicos", prereqs: ["procConservBajasTemp", "procConservAltasTemp"], abre: [] },
+  { id: "evaluacionSensorial", nombre: "Evaluación sensorial", prereqs: ["procConservBajasTemp", "procConservAltasTemp"], abre: ["gestionCalidad"] },
+  { id: "evaluacionProyectos", nombre: "Evaluación de proyectos", prereqs: ["disenoPlantas"], abre: [] },
+  { id: "ingenieriaGrasasAceites", nombre: "Ingeniería de procesos en grasas y aceites", prereqs: ["procConservBajasTemp", "procConservAltasTemp"], abre: [] },
+  { id: "ingenieriaCereales", nombre: "Ingeniería de procesos en cereales", prereqs: ["procConservBajasTemp", "procConservAltasTemp"], abre: [] },
+
+  // Quinto año - X Semestre
+  { id: "ingenieriaLacteos", nombre: "Ingeniería de procesos en lácteos", prereqs: ["procConservBajasTemp", "procConservAltasTemp"], abre: ["practicaProfIA", "actividadFinal"] },
+  { id: "ingenieriaProdMar", nombre: "Ingeniería de procesos en productos del mar", prereqs: ["procConservBajasTemp", "procConservAltasTemp"], abre: ["practicaProfIA", "actividadFinal"] },
+  { id: "ingenieriaFermentaciones", nombre: "Ingeniería de procesos en fermentaciones", prereqs: ["higieneSanidad", "microbiologia"], abre: ["gestionCalidad", "practicaProfIA"] },
+  { id: "gestionCalidad", nombre: "Gestión de calidad", prereqs: ["evaluacionSensorial", "ingenieriaFermentaciones"], abre: ["practicaProfIA", "actividadFinal"] },
+
+  // Sexto año - XI Semestre
+  { id: "practicaProfIA", nombre: "Práctica profesional IA", prereqs: ["ingenieriaLacteos", "ingenieriaProdMar", "ingenieriaFermentaciones", "gestionCalidad"], abre: [] },
+  { id: "actividadFinal", nombre: "Actividad final de titulación", prereqs: ["ingenieriaLacteos", "ingenieriaProdMar", "gestionCalidad"], abre: [] },
+  { id: "practicaProf", nombre: "Práctica profesional", prereqs: ["legislacionAlimentaria"], abre: [] }
 ];
 
-// Estado de desbloqueo
-// Inicial: desbloquear solo los cursos sin prerequisitos (o sea los primeros del primer semestre)
-const desbloqueados = new Set();
+// Estado inicial: los cursos sin prereqs están desbloqueados; el resto bloqueados
+let estadoCursos = {};
 
-// Para simplificar, desbloqueamos al principio los cursos sin prerequisitos: los que no están en ningun "abre" de otro curso
-// Primero guardamos todos ids que abren otros
-const cursosQueAbren = new Set();
-for (const semestre of cursos) {
-  for (const curso of semestre.cursos) {
-    for (const abierto of curso.abre) {
-      cursosQueAbren.add(abierto);
-    }
-  }
-}
-// Los cursos que no están en cursosQueAbren son "iniciales"
-for (const semestre of cursos) {
-  for (const curso of semestre.cursos) {
-    if (!cursosQueAbren.has(curso.id)) {
-      desbloqueados.add(curso.id);
-    }
-  }
-}
+// Inicializar estado
+cursos.forEach(c => {
+  estadoCursos[c.id] = {
+    aprobado: false,
+    desbloqueado: c.prereqs.length === 0
+  };
+});
 
-// Pero ojo, en tu malla, por ejemplo "Química general 1" abre otros, por eso no es inicial,  
-// Los cursos que no aparecen como "abre" son finales, no iniciales.  
-// Entonces vamos a invertir la lógica:
-// Los cursos sin prerequisito son los que NUNCA aparecen en "abre" de ningún otro.  
-// Pero en tu malla no están los prerequisitos explícitos, sino las aperturas.
-// Así que el primer semestre es inicial, o los cursos del primer semestre.
+const container = document.getElementById("malla-container");
 
-// Por lo tanto, para simplicidad: desbloqueamos solo los cursos del primer semestre I del primer año inicialmente.
-desbloqueados.clear();
-cursos[0].cursos.forEach(c => desbloqueados.add(c.id));
-
-// Función para saber si un curso está desbloqueado
-function estaDesbloqueado(id) {
-  return desbloqueados.has(id);
-}
-
-// Función para desbloquear cursos que se abren con uno dado
-function desbloquearCursos(ids) {
+// Función para verificar si se pueden desbloquear nuevos cursos
+function actualizarDesbloqueo() {
   let cambios = false;
-  for (const id of ids) {
-    if (!desbloqueados.has(id)) {
-      desbloqueados.add(id);
-      cambios = true;
+  cursos.forEach(curso => {
+    if (!estadoCursos[curso.id].desbloqueado) {
+      // Verificar si todos los prereqs están aprobados
+      const todosAprobados = curso.prereqs.every(prereqId => estadoCursos[prereqId]?.aprobado);
+      if (todosAprobados) {
+        estadoCursos[curso.id].desbloqueado = true;
+        cambios = true;
+      }
     }
-  }
+  });
   return cambios;
 }
 
-// Renderizado de la malla
-function renderizarMalla() {
-  const mallaDiv = document.getElementById("malla");
-  mallaDiv.innerHTML = "";
+// Función para renderizar la malla
+function render() {
+  container.innerHTML = "";
+  cursos.forEach(curso => {
+    const div = document.createElement("div");
+    div.classList.add("curso");
+    div.id = curso.id;
+    div.textContent = curso.nombre;
 
-  for (const semestre of cursos) {
-    const semDiv = document.createElement("div");
-    semDiv.classList.add("semestre");
-
-    const titulo = document.createElement("h2");
-    titulo.textContent = semestre.semestre;
-    semDiv.appendChild(titulo);
-
-    for (const curso of semestre.cursos) {
-      const cursoDiv = document.createElement("div");
-      cursoDiv.textContent = curso.nombre;
-      cursoDiv.classList.add("curso");
-
-      if (estaDesbloqueado(curso.id)) {
-        cursoDiv.classList.add("unlocked");
-        cursoDiv.title = "Haz clic para desbloquear cursos relacionados";
-
-        cursoDiv.addEventListener("click", () => {
-          // Al hacer click, desbloqueamos los cursos que abre este curso
-          const cambio = desbloquearCursos(curso.abre);
-          if (cambio) {
-            renderizarMalla();
-          }
-        });
-      } else {
-        cursoDiv.classList.add("locked");
-        cursoDiv.title = "Curso bloqueado, desbloquea prerrequisitos primero";
-      }
-
-      semDiv.appendChild(cursoDiv);
+    // Mostrar prerequisitos como tooltip si tiene
+    if (curso.prereqs.length > 0) {
+      const nombresPre = curso.prereqs
+        .map(id => cursos.find(c => c.id === id)?.nombre || id)
+        .join(", ");
+      div.setAttribute("data-prereq", "Prerrequisitos: " + nombresPre);
     }
-    mallaDiv.appendChild(semDiv);
-  }
+
+    if (estadoCursos[curso.id].aprobado) {
+      div.classList.add("aprobado");
+      div.classList.remove("bloqueado", "desbloqueado");
+    } else if (estadoCursos[curso.id].desbloqueado) {
+      div.classList.add("desbloqueado");
+      div.classList.remove("bloqueado", "aprobado");
+      div.style.pointerEvents = "auto";
+    } else {
+      div.classList.add("bloqueado");
+      div.classList.remove("desbloqueado", "aprobado");
+      div.style.pointerEvents = "none";
+    }
+
+    // Click para aprobar o desaprobar si está desbloqueado
+    div.onclick = () => {
+      if (!estadoCursos[curso.id].desbloqueado) return; // no hace nada si está bloqueado
+
+      // Alternar aprobado/desaprobado
+      estadoCursos[curso.id].aprobado = !estadoCursos[curso.id].aprobado;
+
+      // Actualizar desbloqueos
+      while (actualizarDesbloqueo()) {}
+
+      // Re-renderizar
+      render();
+    };
+
+    container.appendChild(div);
+  });
 }
 
-// Inicial render
-renderizarMalla();
+render();
