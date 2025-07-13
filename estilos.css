@@ -45,6 +45,55 @@ h1 {
 
 .course.completed {
   background-color: #c8e6c9;
+  color: #body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 2em;
+  max-width: 800px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  color: #222;
+}
+
+.semestre {
+  margin-top: 2em;
+  padding: 1em;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.semestre h2 {
+  border-left: 5px solid #0077cc;
+  padding-left: 0.5em;
+  color: #0077cc;
+}
+
+.course {
+  margin: 0.5em 0;
+  padding: 0.7em 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  color: #666;
+  cursor: not-allowed;
+  transition: 0.3s;
+}
+
+.course.unlocked {
+  background-color: #e0f7fa;
   color: #000;
+  cursor: pointer;
+}
+
+.course.completed {
+  background-color: #c8e6c9;
+  color: #ffb6c1;
+  text-decoration: line-through;
+};
   text-decoration: line-through;
 }
