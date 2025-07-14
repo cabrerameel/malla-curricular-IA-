@@ -1,108 +1,101 @@
-/* Colores base rosa pastel */
+/* Colores rosa y morado pastel */
 :root {
-  --rosa-claro: #f8d7e3;
-  --rosa-medio: #e18ea6;
-  --rosa-fuerte: #d04c75;
-  --rosa-oscuro: #a93a57;
-  --gris-claro: #f5f5f5;
-  --gris-medio: #ccc;
-  --texto-oscuro: #3a1e2b;
-}
-
-/* Reset básico */
-* {
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
+  --rosa: #f9c1d9;
+  --morado: #6a1b9a;
+  --rosa-oscuro: #d87cb7;
+  --fondo: #fff0f6;
+  --texto: #3d0050;
+  --gris-claro: #eaeaea;
 }
 
 body {
-  background-color: var(--gris-claro);
-  color: var(--texto-oscuro);
-  padding: 20px;
-  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--fondo);
+  color: var(--texto);
+  margin: 20px;
+  text-align: center;
 }
 
 h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: var(--rosa-fuerte);
-  text-shadow: 1px 1px 3px var(--rosa-oscuro);
+  color: var(--morado);
+  margin-bottom: 30px;
 }
 
-/* Contenedor de la malla */
 #malla-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 0 auto 40px;
 }
 
-/* Cada ramo como botón */
-.curso {
-  background-color: var(--rosa-claro);
-  border: 2px solid var(--rosa-medio);
+/* Cada semestre es una columna */
+.semestre {
+  background: var(--rosa);
+  border: 3px solid var(--morado);
   border-radius: 12px;
+  width: 260px;
   padding: 15px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(208, 76, 117, 0.3);
-  user-select: none;
+  box-shadow: 0 0 15px var(--rosa-oscuro);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  min-height: 90px;
-  text-align: center;
+  align-items: center;
+}
+
+.semestre h2 {
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  color: var(--morado);
+  border-bottom: 2px solid var(--morado);
+  width: 90%;
+  padding-bottom: 5px;
+}
+
+/* Botones de los cursos */
+.curso-btn {
+  background-color: var(--fondo);
+  border: 2px solid var(--morado);
+  border-radius: 10px;
+  color: var(--morado);
   font-weight: 600;
-  font-size: 1rem;
-  color: var(--rosa-oscuro);
+  margin: 7px 0;
+  padding: 10px 12px;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+  font-size: 0.9em;
+  text-align: center;
+  line-height: 1.2em;
 }
 
-/* Estado bloqueado */
-.curso.bloqueado {
-  background-color: #ffe7f1;
-  border-color: var(--gris-medio);
-  color: var(--gris-medio);
+/* Curso bloqueado - no clickeable */
+.curso-btn.bloqueado {
+  background-color: var(--gris-claro);
+  border-color: #bba0cc;
+  color: #7b5ea1;
   cursor: not-allowed;
-  box-shadow: none;
+  text-decoration: line-through;
 }
 
-/* Estado aprobado */
-.curso.aprobado {
-  background-color: var(--rosa-fuerte);
-  border-color: var(--rosa-oscuro);
-  color: white;
-  cursor: default;
-  box-shadow: 0 0 10px var(--rosa-oscuro);
-}
-
-/* Estado desbloqueado pero no aprobado */
-.curso.desbloqueado {
-  background-color: var(--rosa-claro);
-  border-color: var(--rosa-medio);
-  color: var(--rosa-oscuro);
+/* Curso desbloqueado y pendiente */
+.curso-btn.desbloqueado {
+  background-color: var(--fondo);
+  border-color: var(--morado);
+  color: var(--morado);
   cursor: pointer;
 }
 
-/* Tooltip para mostrar prerrequisitos */
-.curso[data-prereq] {
-  position: relative;
-}
-
-.curso[data-prereq]:hover::after {
-  content: attr(data-prereq);
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--rosa-fuerte);
-  color: white;
-  padding: 3px 7px;
-  font-size: 0.8rem;
-  border-radius: 5px;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 10;
+/* Curso aprobado */
+.curso-btn.aprobado {
+  background-color: var(--morado);
+  border-color: var(--rosa-oscuro);
+  color: var(--fondo);
+  font-weight: 700;
+  cursor: default;
+  box-shadow: 0 0 8px var(--rosa-oscuro);
 }
